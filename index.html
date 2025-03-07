@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>久帝门业 - 高品质门窗解决方案</title>
+    <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('font.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        :root {
+            --dark-bg-color: #121212;
+            --dark-text-color: #ffffff;
+            --dark-card-bg: rgba(30, 30, 30, 0.5);
+            --dark-card-hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            --dark-btn-bg: rgba(255, 255, 255, 0.1);
+            --dark-btn-border: rgba(255, 255, 255, 0.2);
+            --dark-btn-hover-bg: rgba(255, 255, 255, 0.2);
+            --dark-btn-primary-bg: rgba(255, 255, 255, 0.2);
+            --dark-btn-primary-border: rgba(255, 255, 255, 0.3);
+            --dark-btn-primary-hover-bg: rgba(255, 255, 255, 0.3);
+            --dark-title-gradient: linear-gradient(to right, #fff, #888);
+            --dark-section-line: linear-gradient(to right, #fff, transparent);
+            --dark-placeholder-bg: #333;
+            
+            --light-bg-color: #f5f5f5;
+            --light-text-color: #333;
+            --light-card-bg: rgba(255, 255, 255, 0.8);
+            --light-card-hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --light-btn-bg: rgba(0, 0, 0, 0.05);
+            --light-btn-border: rgba(0, 0, 0, 0.1);
+            --light-btn-hover-bg: rgba(0, 0, 0, 0.1);
+            --light-btn-primary-bg: rgba(0, 0, 0, 0.1);
+            --light-btn-primary-border: rgba(0, 0, 0, 0.2);
+            --light-btn-primary-hover-bg: rgba(0, 0, 0, 0.15);
+            --light-title-gradient: linear-gradient(to right, #333, #777);
+            --light-section-line: linear-gradient(to right, #333, transparent);
+            --light-placeholder-bg: #ddd;
+            
+            color-scheme: light dark;
+        }
+
+        body {
+            background-color: var(--light-bg-color);
+            color: var(--light-text-color);
+            font-family: 'CustomFont', Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: var(--dark-bg-color);
+                color: var(--dark-text-color);
+            }
+        }
+
+        body.dark-theme {
+            background-color: var(--dark-bg-color);
+            color: var(--dark-text-color);
+        }
+
+        body.light-theme {
+            background-color: var(--light-bg-color);
+            color: var(--light-text-color);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            opacity: 0.8;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #turbulence {
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav a {
+            font-size: 1rem;
+            letter-spacing: 0.05rem;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: currentColor;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            margin-left: 1rem;
+        }
+
+        #theme-toggle-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background-color: var(--light-btn-bg);
+            border: 1px solid var(--light-btn-border);
+            color: inherit;
+        }
+
+        body.dark-theme #theme-toggle-btn {
+            background-color: var(--dark-btn-bg);
+            border: 1px solid var(--dark-btn-border);
+        }
+
+        .theme-icon {
+            position: absolute;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        body.dark-theme .light-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        body.dark-theme .dark-icon {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        body.light-theme .light-icon {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        body.light-theme .dark-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .title {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .title h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 1.1;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            background: var(--light-title-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        body.dark-theme .title h1 {
+            background: var(--dark-title-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .subtitle {
+            margin-top: 1rem;
+        }
+
+        .subtitle p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            letter-spacing: 0.1rem;
+            opacity: 0.8;
+            animation: slideIn 1.5s ease-out;
+        }
+
+        /* 3D Cube Styles */
+        .cube-container {
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+            margin: 2rem auto;
+        }
+
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light-text-color);
+            backface-visibility: visible;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            user-select: none;
+            backdrop-filter: blur(5px);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        body.dark-theme .cube-face {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--dark-text-color);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .cube-face-front { transform: translateZ(100px); }
+        .cube-face-back { transform: rotateY(180deg) translateZ(100px); }
+        .cube-face-right { transform: rotateY(90deg) translateZ(100px); }
+        .cube-face-left { transform: rotateY(-90deg) translateZ(100px); }
+        .cube-face-top { transform: rotateX(90deg) translateZ(100px); }
+        .cube-face-bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+            letter-spacing: 0.1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--light-section-line);
+        }
+
+        body.dark-theme .section-title::after {
+            background: var(--dark-section-line);
+        }
+
+        .products {
+            padding: 3rem 0;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-item {
+            background-color: var(--light-card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        body.dark-theme .product-item {
+            background-color: var(--dark-card-bg);
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--light-card-hover-shadow);
+        }
+
+        body.dark-theme .product-item:hover {
+            box-shadow: var(--dark-card-hover-shadow);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .placeholder-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-placeholder-bg);
+            color: inherit;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-theme .placeholder-image {
+            background-color: var(--dark-placeholder-bg);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-item:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* 产品详情页样式 */
+        .product-detail {
+            padding: 3rem 0;
+            scroll-margin-top: 80px;
+        }
+
+        .product-detail-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .product-detail-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-detail-subtitle {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .product-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            background-color: var(--light-card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        body.dark-theme .feature-item {
+            background-color: var(--dark-card-bg);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--light-card-hover-shadow);
+        }
+
+        body.dark-theme .feature-item:hover {
+            box-shadow: var(--dark-card-hover-shadow);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .product-specs {
+            background-color: var(--light-card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-theme .product-specs {
+            background-color: var(--dark-card-bg);
+        }
+
+        .specs-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table th, .specs-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-theme .specs-table th, body.dark-theme .specs-table td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .specs-table th {
+            font-weight: bold;
+        }
+
+        .product-cta {
+            text-align: center;
+        }
+
+        .contact {
+            padding: 3rem 0;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background-color: var(--light-card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        body.dark-theme .contact-item {
+            background-color: var(--dark-card-bg);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            color: inherit;
+            font-size: 1.2rem;
+        }
+
+        .contact-text h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .contact-text p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .contact-item::after {
+            content: '点击复制';
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: var(--light-btn-bg);
+            border: 1px solid var(--light-btn-border);
+            border-radius: 4px;
+            color: inherit;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        body.dark-theme .btn {
+            background-color: var(--dark-btn-bg);
+            border: 1px solid var(--dark-btn-border);
+        }
+
+        .btn:hover {
+            background-color: var(--light-btn-hover-bg);
+            transform: translateY(-2px);
+        }
+
+        body.dark-theme .btn:hover {
+            background-color: var(--dark-btn-hover-bg);
+        }
+
+        .btn-primary {
+            background-color: var(--light-btn-primary-bg);
+            border: 1px solid var(--light-btn-primary-border);
+        }
+
+        body.dark-theme .btn-primary {
+            background-color: var(--dark-btn-primary-bg);
+            border: 1px solid var(--dark-btn-primary-border);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--light-btn-primary-hover-bg);
+        }
+
+        body.dark-theme .btn-primary:hover {
+            background-color: var(--dark-btn-primary-hover-bg);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 0.8;
+            }
+        }
+
+        #copy-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .theme-toggle {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+            
+            .hero {
+                min-height: auto;
+                padding: 3rem 0;
+            }
+            
+            .title-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cube-container {
+                margin: 2rem auto;
+            }
+
+            .product-detail {
+                scroll-margin-top: 60px;
+            }
+
+            .specs-table {
+                font-size: 0.8rem;
+            }
+
+            .specs-table th, .specs-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <canvas id="turbulence"></canvas>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>久帝门业</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#products">产品系列</a></li>
+                    <li><a href="#wooden-doors">木门系列</a></li>
+                    <li><a href="#aluminum-doors">铝包边静音门</a></li>
+                    <li><a href="#luxury-doors">豪华系列</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn" aria-label="切换主题">
+                    <span class="theme-icon light-icon">☀️</span>
+                    <span class="theme-icon dark-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="hero">
+            <div class="title-container">
+                <div class="title">
+                    <h1>精工制造<br>品质门业</h1>
+                    <div class="subtitle">
+                        <p>专注高品质门窗解决方案</p>
+                    </div>
+                </div>
+                
+                <!-- 3D Cube -->
+                <div class="cube-container">
+                    <div class="cube" id="cube">
+                        <div class="cube-face cube-face-front">精湛工艺<br>匠心打造</div>
+                        <div class="cube-face cube-face-back">环保材料<br>健康生活</div>
+                        <div class="cube-face cube-face-right">隔音降噪<br>安静舒适</div>
+                        <div class="cube-face cube-face-left">坚固耐用<br>经久不衰</div>
+                        <div class="cube-face cube-face-top">美观大方<br>提升品味</div>
+                        <div class="cube-face cube-face-bottom">售后无忧<br>终身服务</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="products" class="products">
+            <h2 class="section-title">产品系列</h2>
+            <div class="product-grid">
+                <a href="#wooden-doors" class="product-item">
+                    <div class="product-image">
+                        <div class="placeholder-image">木门系列</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>木门系列</h3>
+                        <p>天然木材，匠心打造</p>
+                    </div>
+                </a>
+                <a href="#aluminum-doors" class="product-item">
+                    <div class="product-image">
+                        <div class="placeholder-image">铝包边静音门</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>铝包边静音门</h3>
+                        <p>隔音效果佳，关闭无声响</p>
+                    </div>
+                </a>
+                <a href="#luxury-doors" class="product-item">
+                    <div class="product-image">
+                        <div class="placeholder-image">豪华系列</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>豪华系列</h3>
+                        <p>铝合金包边，美观大方</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 木门系列详情页 -->
+        <section id="wooden-doors" class="product-detail">
+            <div class="product-detail-header">
+                <h2 class="product-detail-title">木门系列</h2>
+                <p class="product-detail-subtitle">天然木材，匠心打造，为您的家居增添温馨自然的气息</p>
+            </div>
+            
+            <div class="product-gallery">
+                <div class="gallery-item">
+                    <div class="placeholder-image">木门产品图1</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">木门产品图2</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">木门产品图3</div>
+                </div>
+            </div>
+            
+            <div class="product-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🌳</div>
+                    <h3 class="feature-title">天然环保</h3>
+                    <p class="feature-description">采用优质实木材料，环保无污染，为您的家人创造健康的生活环境。</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔨</div>
+                    <h3 class="feature-title">精湛工艺</h3>
+                    <p class="feature-description">每一道工序都经过严格把关，确保产品质量稳定可靠。</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">多样风格</h3>
+                    <p class="feature-description">提供多种木材选择和设计风格，满足不同家装需求。</p>
+                </div>
+            </div>
+            
+            <div class="product-specs">
+                <h3 class="specs-title">产品规格</h3>
+                <table class="specs-table">
+                    <tr>
+                        <th>材质</th>
+                        <td>实木、实木复合</td>
+                    </tr>
+                    <tr>
+                        <th>尺寸</th>
+                        <td>定制尺寸，标准高度2000mm-2400mm</td>
+                    </tr>
+                    <tr>
+                        <th>颜色</th>
+                        <td>原木色、胡桃木色、红橡木色等多种选择</td>
+                    </tr>
+                    <tr>
+                        <th>适用场景</th>
+                        <td>卧室、书房、客厅等室内空间</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="product-cta">
+                <a href="#contact" class="btn btn-primary">咨询详情</a>
+            </div>
+        </section>
+        
+        <!-- 铝包边静音门详情页 -->
+        <section id="aluminum-doors" class="product-detail">
+            <div class="product-detail-header">
+                <h2 class="product-detail-title">铝包边静音门</h2>
+                <p class="product-detail-subtitle">隔音效果佳，关闭无声响，为您打造安静舒适的居住环境</p>
+            </div>
+            
+            <div class="product-gallery">
+                <div class="gallery-item">
+                    <div class="placeholder-image">铝包边门产品图1</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">铝包边门产品图2</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">铝包边门产品图3</div>
+                </div>
+            </div>
+            
+            <div class="product-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🔇</div>
+                    <h3 class="feature-title">静音设计</h3>
+                    <p class="feature-description">特殊的密封条和缓冲设计，关门时无噪音，提供安静的居住环境。</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">坚固耐用</h3>
+                    <p class="feature-description">铝合金包边设计，防潮防撞，使用寿命更长。</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">安全可靠</h3>
+                    <p class="feature-description">采用高品质锁具，安全性能更高，使用更放心。</p>
+                </div>
+            </div>
+            
+            <div class="product-specs">
+                <h3 class="specs-title">产品规格</h3>
+                <table class="specs-table">
+                    <tr>
+                        <th>材质</th>
+                        <td>铝合金包边 + 优质门板</td>
+                    </tr>
+                    <tr>
+                        <th>隔音性能</th>
+                        <td>≥35分贝</td>
+                    </tr>
+                    <tr>
+                        <th>尺寸</th>
+                        <td>定制尺寸，标准高度2000mm-2400mm</td>
+                    </tr>
+                    <tr>
+                        <th>适用场景</th>
+                        <td>卧室、书房、会议室等需要安静的空间</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="product-cta">
+                <a href="#contact" class="btn btn-primary">咨询详情</a>
+            </div>
+        </section>
+        
+        <!-- 豪华系列详情页 -->
+        <section id="luxury-doors" class="product-detail">
+            <div class="product-detail-header">
+                <h2 class="product-detail-title">豪华系列</h2>
+                <p class="product-detail-subtitle">铝合金包边，美观大方，彰显高端品质生活</p>
+            </div>
+            
+            <div class="product-gallery">
+                <div class="gallery-item">
+                    <div class="placeholder-image">豪华系列产品图1</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">豪华系列产品图2</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">豪华系列产品图3</div>
+                </div>
+            </div>
+            
+            <div class="product-features">
+                <div class="feature-item">
+                    <div class="feature-icon">✨</div>
+                    <h3 class="feature-title">豪华外观</h3>
+                    <p class="feature-description">精致的设计和高端的材质，提升整体家居品味。</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛠️</div>
+                    <h3 class="feature-title">优质配件</h3>
+                    <p class="feature-description">采用进口五金配件，开关顺畅，使用寿命长。</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌟</div>
+                    <h3 class="feature-title">定制服务</h3>
+                    <p class="feature-description">提供个性化定制服务，满足您的独特需求。</p>
+                </div>
+            </div>
+            
+            <div class="product-specs">
+                <h3 class="specs-title">产品规格</h3>
+                <table class="specs-table">
+                    <tr>
+                        <th>材质</th>
+                        <td>高端铝合金 + 豪华门板</td>
+                    </tr>
+                    <tr>
+                        <th>表面处理</th>
+                        <td>多种工艺可选，包括拉丝、电镀、喷涂等</td>
+                    </tr>
+                    <tr>
+                        <th>尺寸</th>
+                        <td>定制尺寸，标准高度2000mm-2400mm</td>
+                    </tr>
+                    <tr>
+                        <th>适用场景</th>
+                        <td>别墅、高端公寓、豪华办公室等场所</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="product-cta">
+                <a href="#contact" class="btn btn-primary">咨询详情</a>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2 class="section-title">联系我们</h2>
+            <div class="contact-info">
+                <div class="contact-item" data-copytext="123-4567-8910">
+                    <div class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </div>
+                    <div class="contact-text">
+                        <h3>电话</h3>
+                        <p>123-4567-8910</p>
+                    </div>
+                </div>
+                <div class="contact-item" data-copytext="info@jiudi-doors.com">
+                    <div class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div class="contact-text">
+                        <h3>邮箱</h3>
+                        <p>info@jiudi-doors.com</p>
+                    </div>
+                </div>
+                <div class="contact-item" data-copytext="中国某省某市某区某街道123号">
+                    <div class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div class="contact-text">
+                        <h3>地址</h3>
+                        <p>中国某省某市某区某街道123号</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 久帝门业 版权所有</p>
+        </footer>
+    </div>
+
+    <div id="copy-notification">已复制到剪贴板</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme) {
+                document.body.className = savedTheme;
+            } else {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.body.classList.add('dark-theme');
+                } else {
+                    document.body.classList.add('light-theme');
+                }
+            }
+            
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (!localStorage.getItem('theme')) {
+                    if (e.matches) {
+                        document.body.classList.remove('light-theme');
+                        document.body.classList.add('dark-theme');
+                    } else {
+                        document.body.classList.remove('dark-theme');
+                        document.body.classList.add('light-theme');
+                    }
+                    document.dispatchEvent(new Event('themeChanged'));
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('turbulence');
+            const ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            let particles = [];
+            const particleCount = 50;
+            
+            function createParticles() {
+                particles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 2 + 1,
+                        dx: (Math.random() - 0.5) * 2,
+                        dy: (Math.random() - 0.5) * 2
+                    });
+                }
+            }
+            
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const isDarkTheme = document.body.classList.contains('dark-theme');
+                
+                ctx.fillStyle = isDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)';
+                
+                particles.forEach(particle => {
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    particle.x += particle.dx;
+                    particle.y += particle.dy;
+                    
+                    if (particle.x < 0 || particle.x > canvas.width) particle.dx = -particle.dx;
+                    if (particle.y < 0 || particle.y > canvas.height) particle.dy = -particle.dy;
+                });
+            }
+            
+            function animate() {
+                drawParticles();
+                requestAnimationFrame(animate);
+            }
+            
+            createParticles();
+            animate();
+            
+            document.addEventListener('themeChanged', createParticles);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const body = document.body;
+            
+            themeToggleBtn.addEventListener('click', () => {
+                if (body.classList.contains('dark-theme')) {
+                    body.classList.remove('dark-theme');
+                    body.classList.add('light-theme');
+                    localStorage.setItem('theme', 'light-theme');
+                } else {
+                    body.classList.remove('light-theme');
+                    body.classList.add('dark-theme');
+                    localStorage.setItem('theme', 'dark-theme');
+                }
+                
+                const event = new Event('themeChanged');
+                document.dispatchEvent(event);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.product-category, .catalog, .contact, .product-item, .product-detail');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight * 0.8) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            const elements = document.querySelectorAll('.product-category, .catalog, .contact, .product-item, .product-detail');
+            elements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(50px)';
+                element.style.transition = 'opacity 1s ease, transform 1s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            
+            animateOnScroll();
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+
+        // 3D Cube Rotation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cube = document.getElementById('cube');
+            let rotX = 0;
+            let rotY = 0;
+            let targetRotX = 0;
+            let targetRotY = 0;
+            
+            // 初始旋转，让立方体显示正面
+            cube.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            
+            // 鼠标移动控制立方体旋转
+            document.addEventListener('mousemove', (e) => {
+                // 计算鼠标在屏幕中的相对位置（-1到1之间）
+                const x = (e.clientX / window.innerWidth) * 2 - 1;
+                const y = (e.clientY / window.innerHeight) * 2 - 1;
+                
+                // 设置目标旋转角度
+                targetRotX = y * 30; // 上下移动控制X轴旋转
+                targetRotY = -x * 30; // 左右移动控制Y轴旋转
+            });
+            
+            // 平滑动画
+            function animateCube() {
+                // 平滑过渡到目标角度
+                rotX += (targetRotX - rotX) * 0.05;
+                rotY += (targetRotY - rotY) * 0.05;
+                
+                cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+                
+                requestAnimationFrame(animateCube);
+            }
+            
+            animateCube();
+            
+            // 触摸设备支持
+            let touchStartX, touchStartY;
+            let lastRotX = 0;
+            let lastRotY = 0;
+            
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                lastRotX = rotX;
+                lastRotY = rotY;
+            }, { passive: true });
+            
+            document.addEventListener('touchmove', (e) => {
+                if (!touchStartX || !touchStartY) return;
+                
+                const touchX = e.touches[0].clientX;
+                const touchY = e.touches[0].clientY;
+                
+                const deltaX = touchX - touchStartX;
+                const deltaY = touchY - touchStartY;
+                
+                targetRotX = lastRotX + deltaY * 0.5;
+                targetRotY = lastRotY - deltaX * 0.5;
+            }, { passive: true });
+            
+            document.addEventListener('touchend', () => {
+                touchStartX = null;
+                touchStartY = null;
+            });
+        });
+
+        // 复制联系方式功能
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactItems = document.querySelectorAll('.contact-item');
+            const copyNotification = document.getElementById('copy-notification');
+
+            contactItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const textToCopy = item.getAttribute('data-copytext');
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        copyNotification.textContent = '已复制到剪贴板';
+                        copyNotification.style.display = 'block';
+                        setTimeout(() => {
+                            copyNotification.style.display = 'none';
+                        }, 2000);
+                    }, (err) => {
+                        console.error('无法复制文本: ', err);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
